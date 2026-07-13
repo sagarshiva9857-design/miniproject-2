@@ -1,0 +1,161 @@
+import java.util.Scanner;
+
+class EscapeRoomGame {
+    private int lives = 3;
+    private Scanner sc = new Scanner(System.in);
+
+    public void startGame() {
+        while (true) {
+            System.out.println("\n===== ESCAPE ROOM =====");
+            System.out.println("1. Start Game");
+            System.out.println("2. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice;
+
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.println("Invalid Input! Enter 1 or 2.");
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    playGame();
+                    return;
+                case 2:
+                    System.out.println("Thanks for playing!");
+                    return;
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+        }
+    }
+
+    private void playGame() {
+
+        if (!room1()) return;
+        if (!room2()) return;
+        if (!room3()) return;
+        if (!room4()) return;
+
+        System.out.println("\n***************************");
+        System.out.println("EXIT DOOR OPENED!");
+        System.out.println("YOU ESCAPED!");
+        System.out.println("***************************");
+    }
+
+    private boolean room1() {
+        while (lives > 0) {
+            System.out.println("\n--- Room 1 : Guess Number ---");
+            System.out.println("Guess the secret number (1-10):");
+
+            int answer;
+
+            try {
+                answer = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.println("Invalid Input!");
+                continue;
+            }
+
+            if (answer == 7) {
+                System.out.println("Correct! Room 1 Cleared.");
+                return true;
+            } else {
+                loseLife();
+            }
+        }
+        return false;
+    }
+
+    private boolean room2() {
+        while (lives > 0) {
+            System.out.println("\n--- Room 2 : Array Puzzle ---");
+            System.out.println("Array = {5,10,15,20}");
+            System.out.print("Enter the sum of all elements: ");
+
+            int answer;
+
+            try {
+                answer = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.println("Invalid Input!");
+                continue;
+            }
+
+            if (answer == 50) {
+                System.out.println("Correct! Room 2 Cleared.");
+                return true;
+            } else {
+                loseLife();
+            }
+        }
+        return false;
+    }
+
+    private boolean room3() {
+        while (lives > 0) {
+            System.out.println("\n--- Room 3 : String Puzzle ---");
+            System.out.print("Reverse of 'JAVA': ");
+
+            String ans = sc.nextLine();
+
+            if (ans.equalsIgnoreCase("AVAJ")) {
+                System.out.println("Correct! Room 3 Cleared.");
+                return true;
+            } else {
+                loseLife();
+            }
+        }
+        return false;
+    }
+
+    private boolean room4() {
+        while (lives > 0) {
+            System.out.println("\n--- Room 4 : Java MCQ ---");
+            System.out.println("Which keyword is used for inheritance?");
+            System.out.println("1. implements");
+            System.out.println("2. extends");
+            System.out.println("3. import");
+            System.out.println("4. package");
+            System.out.print("Answer: ");
+
+            int answer;
+
+            try {
+                answer = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.println("Invalid Input!");
+                continue;
+            }
+
+            if (answer == 2) {
+                System.out.println("Correct! Room 4 Cleared.");
+                return true;
+            } else {
+                loseLife();
+            }
+        }
+        return false;
+    }
+
+    private void loseLife() {
+        lives--;
+        if (lives > 0) {
+            System.out.println("Wrong Answer!");
+            System.out.println("Lives Remaining: " + lives);
+        } else {
+            System.out.println("\nGame Over!");
+            System.out.println("You Lost All Lives.");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        EscapeRoomGame game = new EscapeRoomGame();
+        game.startGame();
+    }
+}
